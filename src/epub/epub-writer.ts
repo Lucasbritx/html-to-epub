@@ -53,11 +53,15 @@ export async function writeEpub(
     // Convert chapters to content
     let content = chaptersToContent(book.chapters);
 
-    // Process images if included
-    if (opts.includeImages && book.images.length > 0) {
-      content = embedImages(content, book.images);
-      logDebug(`Embedded ${book.images.length} images`);
-    }
+    // DO NOT embed images as data URIs - epub-gen-memory expects original URLs
+    // and will download and include them automatically
+    // The processed images are stored in book.images for reference but the HTML
+    // should keep its original URLs so epub-gen-memory can handle them
+    // Note: We still need to process images (compress) but do it in parallel
+    // with epub-gen-memory's download, OR skip preprocessing entirely
+
+    // For now, we skip image embedding since epub-gen-memory handles images
+    // The normalizer already resolved relative URLs to absolute URLs
 
     // Generate EPUB buffer
     logDebug('Generating EPUB content...');

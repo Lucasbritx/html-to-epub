@@ -27,7 +27,7 @@ export interface NormalizerOptions {
 }
 
 const DEFAULT_OPTIONS: NormalizerOptions = {
-  processImages: true,
+  processImages: false, // Let epub-gen-memory handle image downloading
   removeExternalLinks: false,
 };
 
@@ -120,13 +120,13 @@ export class Normalizer implements INormalizer {
       convertExternalToText: true,
     });
 
-    // 4. Resolve image URLs
+    // 4. Resolve image URLs (keep original URLs - epub-gen-memory downloads them)
     content = resolveImageUrls(content, page.url);
 
-    // 5. Update image references to processed images
-    if (processedImages.length > 0) {
-      content = updateImageReferences(content, processedImages, page.url);
-    }
+    // 5. Do NOT update image references - epub-gen-memory expects original URLs
+    // The processed images are stored for reference but we keep the absolute URLs
+    // so epub-gen-memory can download them. If we replaced them with relative paths,
+    // epub-gen-memory would try to download from non-existent URLs.
 
     return {
       url: page.url,
