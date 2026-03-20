@@ -220,7 +220,7 @@ export const SITE_PATTERNS: SitePattern[] = [
     htmlPatterns: ['window.$docsify', 'docsify.min.js', 'docsify.js', 'data-docsify'],
     config: {
       selectors: GITHUB_PAGES_SELECTORS,
-      crawlStrategy: { type: 'sidebar', selector: '.sidebar-nav a, #sidebar a' },
+      crawlStrategy: { type: 'sidebar', selector: '.sidebar a, .sidebar-nav a, .chapter a, .chapter-link a, [class*="chapter"] a, nav a' },
       imageOptions: DEFAULT_IMAGE_OPTIONS,
     },
   },
@@ -230,7 +230,7 @@ export const SITE_PATTERNS: SitePattern[] = [
     htmlPatterns: ['gitbook.js', 'gitbook.min.js', 'book-summary', 'GitBook'],
     config: {
       selectors: GITBOOK_SELECTORS,
-      crawlStrategy: { type: 'sidebar', selector: '.book-summary a, .summary a' },
+      crawlStrategy: { type: 'sidebar', selector: '.book-summary a, .summary a, .chapter a, [class*="chapter"] a' },
       imageOptions: DEFAULT_IMAGE_OPTIONS,
     },
   },
@@ -250,7 +250,7 @@ export const SITE_PATTERNS: SitePattern[] = [
     htmlPatterns: [],
     config: {
       selectors: GITHUB_PAGES_SELECTORS,
-      crawlStrategy: { type: 'sidebar', selector: '.sidebar-nav a, .sidebar a, nav a' },
+      crawlStrategy: { type: 'sidebar', selector: '.sidebar a, .sidebar-nav a, .chapter a, .chapter-link a, [class*="chapter"] a, nav a' },
       imageOptions: DEFAULT_IMAGE_OPTIONS,
     },
   },

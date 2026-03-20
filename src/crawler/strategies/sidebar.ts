@@ -15,7 +15,9 @@ export class SidebarStrategy implements ICrawlStrategy {
   private sidebarSelector: string;
 
   constructor(selector?: string) {
-    this.sidebarSelector = selector || '.sidebar-nav a, .sidebar a, #sidebar a, nav a';
+    this.sidebarSelector = selector || 
+      '.sidebar a, .sidebar-nav a, #sidebar a, nav a, .chapter a, .chapter-link a, ' +
+      '[class*="sidebar"] a, [class*="chapter"] a, [role="navigation"] a, .book-summary a, .summary a';
   }
 
   canHandle(html: string, _url: string): boolean {
@@ -27,11 +29,16 @@ export class SidebarStrategy implements ICrawlStrategy {
       'toc',
       'table-of-contents',
       'nav-list',
+      'chapter-link',
+      'chapter-item',
     ];
 
     const htmlLower = html.toLowerCase();
     return sidebarPatterns.some(
-      (pattern) => htmlLower.includes(`class="${pattern}"`) || htmlLower.includes(`id="${pattern}"`)
+      (pattern) => htmlLower.includes(`class="${pattern}"`) || 
+                   htmlLower.includes(`id="${pattern}"`) ||
+                   htmlLower.includes(`class="chapter`) ||
+                   htmlLower.includes(`class="chapter-`)
     );
   }
 

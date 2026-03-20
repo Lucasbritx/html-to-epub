@@ -36,7 +36,8 @@ export function extractNavigationLinks(
 
   let order = 0;
 
-  // Try each navigation selector in order
+  // Try each navigation selector and collect ALL links
+  // Don't stop at first match - we want to find all chapter links
   for (const selector of options.navigationSelectors) {
     const elements = $(selector);
 
@@ -93,11 +94,6 @@ export function extractNavigationLinks(
         order: order++,
       });
     });
-
-    // If we found links with this selector, don't try others
-    if (links.length > 0) {
-      break;
-    }
   }
 
   logDebug(`Extracted ${links.length} unique links`);
